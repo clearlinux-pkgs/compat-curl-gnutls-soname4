@@ -1,0 +1,40 @@
+From 0acf4a97672e27b6370691506531311233763765 Mon Sep 17 00:00:00 2001
+From: Arzhan Kinzhalin <arzhan.i.kinzhalin@intel.com>
+Date: Mon, 4 Sep 2017 20:21:15 +0000
+Subject: [PATCH 1/5] Remove use of DES.
+
+Signed-off-by: Arzhan Kinzhalin <arzhan.i.kinzhalin@intel.com>
+---
+ configure.ac     | 2 +-
+ lib/curl_setup.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 42fc003..d737aad 100755
+--- a/configure.ac
++++ b/configure.ac
+@@ -4117,7 +4117,7 @@ if test "x$CURL_DISABLE_CRYPTO_AUTH" != "x1"; then
+   if test "x$OPENSSL_ENABLED" = "x1" -o "x$USE_WINDOWS_SSPI" = "x1" \
+       -o "x$GNUTLS_ENABLED" = "x1" -o "x$MBEDTLS_ENABLED" = "x1" \
+       -o "x$NSS_ENABLED" = "x1" -o "x$DARWINSSL_ENABLED" = "x1"; then
+-    SUPPORT_FEATURES="$SUPPORT_FEATURES NTLM"
++    SUPPORT_FEATURES="$SUPPORT_FEATURES"
+ 
+     if test "x$CURL_DISABLE_HTTP" != "x1" -a \
+         "x$NTLM_WB_ENABLED" = "x1"; then
+diff --git a/lib/curl_setup.h b/lib/curl_setup.h
+index f83e1ea..c99aa94 100644
+--- a/lib/curl_setup.h
++++ b/lib/curl_setup.h
+@@ -671,7 +671,7 @@ int netware_init(void);
+     defined(USE_OS400CRYPTO) || defined(USE_WIN32_CRYPTO) || \
+     defined(USE_MBEDTLS)
+ 
+-#define USE_NTLM
++#undef USE_NTLM
+ 
+ #  if defined(USE_MBEDTLS)
+ /* Get definition of MBEDTLS_MD4_C */
+-- 
+2.20.0
+

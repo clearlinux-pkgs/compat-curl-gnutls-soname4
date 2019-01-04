@@ -1,0 +1,236 @@
+From 75fbc5920aedc67b0b6cadbbb8cf974337cbc968 Mon Sep 17 00:00:00 2001
+From: "Brad T. Peters" <brad.t.peters@intel.com>
+Date: Fri, 25 Mar 2016 13:41:56 +0000
+Subject: [PATCH 2/5] Add pacrunner call for autoproxy resolution
+
+When a http_proxy is not set in the environment, query pacrunner
+for the appropriate proxy to use to access the desired URL, if any.
+
+Assumptions of this patch are:
+ - Any caching of the proxy script and the resultant URL-specific
+  proxy are handled by pacrunner
+ - The decision as to when to refresh the proxy script is also made
+  by pacrunner
+
+Signed-off-by: Brad T. Peters <brad.t.peters@intel.com>
+Signed-off-by: Arzhan Kinzhalin <arzhan.i.kinzhalin@intel.com>
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ configure.ac    |   2 +
+ lib/Makefile.am |   4 +-
+ lib/url.c       | 132 ++++++++++++++++++++++++++++++++++++++++++++++--
+ 3 files changed, 132 insertions(+), 6 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index d737aad..fc75440 100755
+--- a/configure.ac
++++ b/configure.ac
+@@ -41,6 +41,8 @@ AC_CONFIG_MACRO_DIR([m4])
+ AM_MAINTAINER_MODE
+ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+ 
++PKG_CHECK_MODULES([DBUS], [dbus-1])
++
+ CURL_CHECK_OPTION_DEBUG
+ CURL_CHECK_OPTION_OPTIMIZE
+ CURL_CHECK_OPTION_WARNINGS
+diff --git a/lib/Makefile.am b/lib/Makefile.am
+index a7b5262..abcd2d9 100644
+--- a/lib/Makefile.am
++++ b/lib/Makefile.am
+@@ -85,8 +85,8 @@ AM_LDFLAGS =
+ AM_CFLAGS =
+ 
+ libcurl_la_CPPFLAGS_EXTRA =
+-libcurl_la_LDFLAGS_EXTRA =
+-libcurl_la_CFLAGS_EXTRA =
++libcurl_la_LDFLAGS_EXTRA = $(DBUS_LIBS)
++libcurl_la_CFLAGS_EXTRA = $(DBUS_CFLAGS)
+ 
+ @CODE_COVERAGE_RULES@
+ libcurl_la_LDFLAGS_EXTRA += $(CODE_COVERAGE_LDFLAGS)
+diff --git a/lib/url.c b/lib/url.c
+index 7839dfa..a9415b2 100644
+--- a/lib/url.c
++++ b/lib/url.c
+@@ -65,6 +65,11 @@
+ bool curl_win32_idn_to_ascii(const char *in, char **out);
+ #endif  /* USE_LIBIDN2 */
+ 
++#ifndef CURL_DISABLE_PROXY
++/* Need dbus so we can query pacrunner for proxy */
++#include <dbus/dbus.h>
++#endif /* CURL_DISABLE_PROXY */
++
+ #include "urldata.h"
+ #include "netrc.h"
+ 
+@@ -128,6 +133,7 @@ bool curl_win32_idn_to_ascii(const char *in, char **out);
+ 
+ static void conn_free(struct connectdata *conn);
+ static void free_idnconverted_hostname(struct hostname *host);
++static int query_pacrunner_proxy(char *url, char *host, char *proxy_host);
+ static unsigned int get_protocol_family(unsigned int protocol);
+ 
+ /* Some parts of the code (e.g. chunked encoding) assume this buffer has at
+@@ -2373,9 +2379,11 @@ static bool check_noproxy(const char *name, const char *no_proxy)
+ * name and is not limited to HTTP proxies only.
+ * The returned pointer must be freed by the caller (unless NULL)
+ ****************************************************************/
+-static char *detect_proxy(struct connectdata *conn)
++static char *detect_proxy(struct connectdata *conn, char *url)
+ {
+   char *proxy = NULL;
++  char proxy_tmp[256];
++  int autoproxy_ret = 0;
+ 
+   /* If proxy was not specified, we check for default proxy environment
+    * variables, to enable i.e Lynx compliance:
+@@ -2431,7 +2439,18 @@ static char *detect_proxy(struct connectdata *conn)
+   if(prox) {
+     proxy = prox; /* use this */
+   }
+-  else {
++
++  if(!proxy) {
++    /* No protocol-specific proxy set in the environment.
++     *     Fallback to pacrunner autoproxy lookup */
++    autoproxy_ret = query_pacrunner_proxy(url,
++                        conn->host.name,
++                        proxy_tmp);
++    if (!autoproxy_ret)
++        proxy = strndup(proxy_tmp, 256);
++  }
++
++  if(!proxy) {
+     envp = (char *)"all_proxy";
+     proxy = curl_getenv(envp); /* default proxy to use */
+     if(!proxy) {
+@@ -2741,10 +2760,12 @@ static CURLcode create_conn_helper_init_proxy(struct connectdata *conn)
+     Curl_safefree(proxy);
+     Curl_safefree(socksproxy);
+   }
+-#ifndef CURL_DISABLE_HTTP
+   else if(!proxy && !socksproxy)
++#ifndef CURL_DISABLE_HTTP
+     /* if the host is not in the noproxy list, detect proxy. */
+-    proxy = detect_proxy(conn);
++    proxy = detect_proxy(conn, data->change.url);
++#else  /* !CURL_DISABLE_HTTP */
++    proxy = NULL;
+ #endif /* CURL_DISABLE_HTTP */
+ 
+   Curl_safefree(no_proxy);
+@@ -3577,6 +3598,109 @@ static void reuse_conn(struct connectdata *old_conn,
+ #endif
+ }
+ 
++/**
++ * query_pacrunner_proxy() queries pacrunner via dbus in an
++ * attempt to obtain autoproxy rules. Proxy rules set by the
++ * environment (shell ENV variables) should take precidence over
++ * autproxy, in which case pacrunner is not called.
++ *
++ * Note on error messages: There are none. This is a fall-back attempt
++ * at proxy detection via autoproxy, and any failure is not important.
++ * End result of failure will simply be a direct connection attempt,
++ * which may fail if behind a firewall.
++ *
++ * Return proxy_host: URL for appropriate proxy, if any
++ */
++static int query_pacrunner_proxy(char *url, char *host, char *proxy_host)
++{
++    DBusMessage *msg;
++    DBusMessageIter args;
++    DBusConnection *conn;
++    DBusError dret;
++    DBusPendingCall *pending;
++    int ret = 1;
++    char *prox;
++
++    dbus_error_init(&dret);
++
++    conn = dbus_bus_get(DBUS_BUS_SYSTEM, &dret);
++    if ((dbus_error_is_set(&dret)) || (conn == NULL))
++        return ret;
++
++    msg = dbus_message_new_method_call("org.pacrunner",
++                                        "/org/pacrunner/client",
++                                        "org.pacrunner.Client",
++                                        "FindProxyForURL");
++    if (msg == NULL)
++        goto dbus_fail;
++
++    /* Append dest url args */
++    dbus_message_iter_init_append(msg, &args);
++    ret = dbus_message_iter_append_basic(&args, DBUS_TYPE_STRING, &url);
++    if (!ret) {
++        dbus_message_unref(msg);
++        goto dbus_fail;
++    }
++
++    ret = dbus_message_iter_append_basic(&args, DBUS_TYPE_STRING, &host);
++    if (!ret) {
++        dbus_message_unref(msg);
++        goto dbus_fail;
++    }
++
++    /* Send msg and get handle for reply */
++    ret = dbus_connection_send_with_reply(conn, msg, &pending, -1);
++    if (!ret) {
++        dbus_message_unref(msg);
++        goto dbus_fail;
++    }
++
++    if (pending == NULL) {
++//        printf("curl: Waiting for IO failed with pending == NULL\n");
++        dbus_message_unref(msg);
++        goto dbus_fail;
++    }
++
++    dbus_connection_flush(conn);
++
++    /* Wait for a reply */
++    dbus_pending_call_block(pending);
++
++    /* Get the reply msg */
++    msg = dbus_pending_call_steal_reply(pending);
++    if (msg == NULL) {
++        goto dbus_fail;
++    }
++
++    dbus_pending_call_unref(pending);
++
++    /* Read the parameters */
++    if (!dbus_message_iter_init(msg, &args)) {
++        dbus_message_unref(msg);
++    } else if (dbus_message_iter_get_arg_type(&args) != DBUS_TYPE_STRING) {
++        dbus_message_unref(msg);
++    } else {
++        /* The arg attached to the response object is a string, which is our expected
++         *  result */
++        dbus_message_iter_get_basic(&args, &prox);
++
++        /* pacrunner prepends all valid proxy URLS with PROXY */
++        if (!strncmp("PROXY", prox, 5)) {
++            if (!dbus_error_is_set(&dret)) {
++                strncpy(proxy_host, prox + 6, 255);
++                ret = 0;
++            }
++        }
++        if (!strncmp("DIRECT", prox, 6))
++                ret = 1;
++    }
++
++dbus_fail:
++    dbus_connection_unref(conn);
++    dbus_error_free(&dret);
++    return ret; /* failure */
++}
++
+ /**
+  * create_conn() sets up a new connectdata struct, or re-uses an already
+  * existing one, and resolves host name.
+-- 
+2.20.0
+

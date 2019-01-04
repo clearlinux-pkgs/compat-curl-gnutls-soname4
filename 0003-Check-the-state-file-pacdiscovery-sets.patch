@@ -1,0 +1,50 @@
+From c44302e620e3b304f1fe1dd4d171c26542a8892d Mon Sep 17 00:00:00 2001
+From: Tudor Marcu <tudor.marcu@intel.com>
+Date: Mon, 19 Oct 2015 14:27:02 -0700
+Subject: [PATCH 3/5] Check the state file pacdiscovery sets
+
+If pacdiscovery did not run, then Pacrunner has no proxy script, thus proxy
+resolution will not work - so just ignore any dbus connection and run libcurl.
+
+Signed-off-by: Tudor Marcu <tudor.marcu@intel.com>
+Signed-off-by: Arzhan Kinzhalin <arzhan.i.kinzhalin@intel.com>
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ lib/url.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/lib/url.c b/lib/url.c
+index a9415b2..2e3d0f2 100644
+--- a/lib/url.c
++++ b/lib/url.c
+@@ -69,6 +69,8 @@ bool curl_win32_idn_to_ascii(const char *in, char **out);
+ /* Need dbus so we can query pacrunner for proxy */
+ #include <dbus/dbus.h>
+ #endif /* CURL_DISABLE_PROXY */
++#include <sys/stat.h>
++#define PROXY_STATE_FILE "/run/pacrunner/pac_active"
+ 
+ #include "urldata.h"
+ #include "netrc.h"
+@@ -2406,6 +2408,7 @@ static char *detect_proxy(struct connectdata *conn, char *url)
+   const char *protop = conn->handler->scheme;
+   char *envp = proxy_env;
+   char *prox;
++  struct stat sbuff;
+ 
+   /* Now, build <protocol>_proxy and check for such a one to use */
+   while(*protop)
+@@ -2440,7 +2443,9 @@ static char *detect_proxy(struct connectdata *conn, char *url)
+     proxy = prox; /* use this */
+   }
+ 
+-  if(!proxy) {
++  /* Check that no proxy is set AND that pacdiscovery has set pacrunner
++   * with a PAC script */
++  if(!proxy && stat(PROXY_STATE_FILE, &sbuff) == 0) {
+     /* No protocol-specific proxy set in the environment.
+      *     Fallback to pacrunner autoproxy lookup */
+     autoproxy_ret = query_pacrunner_proxy(url,
+-- 
+2.20.0
+

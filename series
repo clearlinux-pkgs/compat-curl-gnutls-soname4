@@ -1,0 +1,7 @@
+0001-Remove-use-of-DES.patch
+0002-Add-pacrunner-call-for-autoproxy-resolution.patch
+0003-Check-the-state-file-pacdiscovery-sets.patch
+0004-Avoid-stripping-the-g-option.patch
+0005-Open-library-file-descriptors-with-O_CLOEXEC.patch
+CVE-2017-1000254.nopatch
+soname-compat.patch

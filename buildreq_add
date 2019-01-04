@@ -1,0 +1,27 @@
+#
+# This file contains extra pkgconfig build requirements that don't get picked up but are 
+# desirable. One name per line, no whitespace.
+#
+gnutls-dev
+libidn-dev
+python-dev
+zlib-dev
+groff
+nghttp2-dev
+ca-certs
+dbus-dev
+#krb5-dev
+e2fsprogs-dev
+glibc-dev
+libc6
+glibc-staticdev
+
+
+gnutls-dev32
+libidn-dev32
+zlib-dev32
+dbus-dev32
+nghttp2-dev32
+e2fsprogs-dev32
+libgcrypt-dev32
+nettle-dev32
