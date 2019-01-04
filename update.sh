@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -x
 
 # compat-curl-gnutls-soname4 should always be based on our native curl
 # package, with the exception of being configured to use gnutls and
@@ -28,7 +29,6 @@ done
 # Update the patch series again
 echo "Updating patch series"
 cp -v ../curl/series .
-echo "$SONAME_PATCH" >> series
 
 # Clone the configures
 echo "Disabling OpenSSL in configure"
@@ -54,6 +54,18 @@ pushd curl*
 git init
 git add .
 git commit -m "Initial commit"
+
+# Apply old patches
+echo "Applying old patches"
+for i in $(cat ../../series|grep -v -E '.nopatch$') ; do
+    patch -p1 < "../../$i"
+done
+
+# Stash patches
+echo "Stashing current patchset"
+git add .
+git commit -m "autocommit"
+
 echo "Patching soname"
 find . -name Makefile.am | xargs -I{} sed -i {} -e 's/libcurl\.la/libcurl-gnutls.la/g'
 find . -name Makefile.am | xargs -I{} sed -i {} -e 's/libcurl_la/libcurl_gnutls_la/g'
@@ -64,6 +76,9 @@ git format-patch HEAD~1
 mv *.patch "../../$SONAME_PATCH"
 popd
 popd
+
+# Add soname patch
+echo "$SONAME_PATCH" >> series
 
 echo "Cleaning up"
 rm -rf staging
