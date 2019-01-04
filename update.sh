@@ -11,15 +11,11 @@ set -e
 # Note, these applications are closed source, so there isn't much else
 # we can do but provide the soname compat package
 
-BLESSED_SONAME_PATCH="soname-compat.patch"
+SONAME_PATCH="soname-compat.patch"
 
 # Nuke all patches that aren't the blessed patch
 echo "Wiping old patchset"
 for i in $(cat series) ; do
-    if [[ "$i" == "$BLESSED_SONAME_PATCH" ]] ; then
-        echo "Skipping $i"
-        continue
-    fi
     git rm -f $i
 done
 
@@ -32,7 +28,7 @@ done
 # Update the patch series again
 echo "Updating patch series"
 cp -v ../curl/series .
-echo "$BLESSED_SONAME_PATCH" >> series
+echo "$SONAME_PATCH" >> series
 
 # Clone the configures
 echo "Disabling OpenSSL in configure"
@@ -65,7 +61,7 @@ echo "Emitting patch"
 git add .
 git commit -s -m "Switch soname to curl-gnutls for binary compat"
 git format-patch HEAD~1
-mv *.patch "../../$BLESSED_SONAME_PATCH"
+mv *.patch "../../$SONAME_PATCH"
 popd
 popd
 
