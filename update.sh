@@ -34,12 +34,17 @@ cp -v ../curl/series .
 echo "Disabling OpenSSL in configure"
 cp -v ../curl/configure{,64} .
 echo "--without-openssl" >> configure
+echo "--with-gnutls" >> configure
+# Delete with-ssl opt
+sed -e '/with\-ssl/d' -i configure
 
 # Clone the buildreqs
 echo "Swapping OpenSSL for gnutls in build reqs"
 cp -v ../curl/buildreq_{add,ban} .
 sed -i buildreq_add -e 's/openssl/gnutls/g'
 echo "openssl-dev" >> buildreq_ban
+echo "libgcrypt-dev32" >> buildreq_add
+echo "nettle-dev32" >> buildreq_add
 
 echo "Fetching curl"
 CURL_URL="$(grep -E "^URL" ../curl/Makefile|cut -d = -f 2)"
