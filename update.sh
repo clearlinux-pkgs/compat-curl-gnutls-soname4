@@ -69,5 +69,8 @@ mv *.patch "../../$BLESSED_SONAME_PATCH"
 popd
 popd
 
+echo "Cleaning up"
+rm -rf staging
+
 echo "Now running autospec against ${CURL_URL}"
 make autospec URL="$CURL_URL"
