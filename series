@@ -5,3 +5,6 @@
 0005-Open-library-file-descriptors-with-O_CLOEXEC.patch
 CVE-2017-1000254.nopatch
 soname-compat.patch
+cve-2018-16890.patch
+cve-2019-3822.patch
+cve-2019-3823.patch

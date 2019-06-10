@@ -6,7 +6,7 @@
 #
 Name     : compat-curl-gnutls-soname4
 Version  : 7.63.0
-Release  : 1
+Release  : 2
 URL      : https://github.com/curl/curl/releases/download/curl-7_63_0/curl-7.63.0.tar.xz
 Source0  : https://github.com/curl/curl/releases/download/curl-7_63_0/curl-7.63.0.tar.xz
 Source99 : https://github.com/curl/curl/releases/download/curl-7_63_0/curl-7.63.0.tar.xz.asc
@@ -58,6 +58,9 @@ Patch4: 0004-Avoid-stripping-the-g-option.patch
 Patch5: 0005-Open-library-file-descriptors-with-O_CLOEXEC.patch
 Patch6: CVE-2017-1000254.nopatch
 Patch7: soname-compat.patch
+Patch8: cve-2018-16890.patch
+Patch9: cve-2019-3822.patch
+Patch10: cve-2019-3823.patch
 
 %description
 _   _ ____  _
@@ -70,7 +73,6 @@ ___| | | |  _ \| |
 Summary: bin components for the compat-curl-gnutls-soname4 package.
 Group: Binaries
 Requires: compat-curl-gnutls-soname4-license = %{version}-%{release}
-Requires: compat-curl-gnutls-soname4-man = %{version}-%{release}
 
 %description bin
 bin components for the compat-curl-gnutls-soname4 package.
@@ -82,6 +84,7 @@ Group: Development
 Requires: compat-curl-gnutls-soname4-lib = %{version}-%{release}
 Requires: compat-curl-gnutls-soname4-bin = %{version}-%{release}
 Provides: compat-curl-gnutls-soname4-devel = %{version}-%{release}
+Requires: compat-curl-gnutls-soname4 = %{version}-%{release}
 
 %description dev
 dev components for the compat-curl-gnutls-soname4 package.
@@ -140,6 +143,9 @@ man components for the compat-curl-gnutls-soname4 package.
 %patch4 -p1
 %patch5 -p1
 %patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
 pushd ..
 cp -a curl-7.63.0 build32
 popd
@@ -149,11 +155,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1546611727
-export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export SOURCE_DATE_EPOCH=1560137856
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
 %reconfigure --disable-static --disable-ldap \
 --without-winidn \
 --with-libidn \
@@ -210,7 +217,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1546611727
+export SOURCE_DATE_EPOCH=1560137856
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4
 cp COPYING %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4/COPYING
