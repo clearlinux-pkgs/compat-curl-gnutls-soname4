@@ -6,7 +6,7 @@
 #
 Name     : compat-curl-gnutls-soname4
 Version  : 7.63.0
-Release  : 6
+Release  : 7
 URL      : https://github.com/curl/curl/releases/download/curl-7_63_0/curl-7.63.0.tar.xz
 Source0  : https://github.com/curl/curl/releases/download/curl-7_63_0/curl-7.63.0.tar.xz
 Source1 : https://github.com/curl/curl/releases/download/curl-7_63_0/curl-7.63.0.tar.xz.asc
@@ -63,6 +63,7 @@ Patch9: cve-2019-3822.patch
 Patch10: cve-2019-3823.patch
 Patch11: CVE-2019-5435.patch
 Patch12: CVE-2019-5436.patch
+Patch13: CVE-2019-5481.patch
 
 %description
 _   _ ____  _
@@ -110,6 +111,7 @@ license components for the compat-curl-gnutls-soname4 package.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 pushd ..
 cp -a curl-7.63.0 build32
 popd
@@ -119,7 +121,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1567807979
+export SOURCE_DATE_EPOCH=1568944423
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -181,7 +183,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1567807979
+export SOURCE_DATE_EPOCH=1568944423
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4
 cp COPYING %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4/COPYING
