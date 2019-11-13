@@ -4,7 +4,6 @@
 #
 gnutls-dev
 libidn-dev
-python-dev
 zlib-dev
 groff
 nghttp2-dev
