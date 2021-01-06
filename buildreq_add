@@ -1,26 +1,22 @@
-#
-# This file contains extra pkgconfig build requirements that don't get picked up but are 
-# desirable. One name per line, no whitespace.
-#
-gnutls-dev
-libidn-dev
-zlib-dev
-groff
-nghttp2-dev
+# This file contains additional build requirements that did not get
+# picked up automatically. One name per line, no whitespace.
 ca-certs
 dbus-dev
-#krb5-dev
-e2fsprogs-dev
-glibc-dev
-libc6
-glibc-staticdev
-
-
-gnutls-dev32
-libidn-dev32
-zlib-dev32
 dbus-dev32
-nghttp2-dev32
+e2fsprogs-dev
 e2fsprogs-dev32
+glibc-dev
+glibc-staticdev
+groff
+libc6
+libidn-dev
+libidn-dev32
+nghttp2-dev
+nghttp2-dev32
+gnutls-dev
+gnutls-dev32
+pkg-config
+zlib-dev
+zlib-dev32
 libgcrypt-dev32
 nettle-dev32

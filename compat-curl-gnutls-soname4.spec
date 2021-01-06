@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x5CC908FDB71E12C2 (daniel@haxx.se)
 #
 Name     : compat-curl-gnutls-soname4
-Version  : 7.63.0
-Release  : 8
-URL      : https://github.com/curl/curl/releases/download/curl-7_63_0/curl-7.63.0.tar.xz
-Source0  : https://github.com/curl/curl/releases/download/curl-7_63_0/curl-7.63.0.tar.xz
-Source1 : https://github.com/curl/curl/releases/download/curl-7_63_0/curl-7.63.0.tar.xz.asc
+Version  : 7.74.0
+Release  : 9
+URL      : https://github.com/curl/curl/releases/download/curl-7_74_0/curl-7.74.0.tar.xz
+Source0  : https://github.com/curl/curl/releases/download/curl-7_74_0/curl-7.74.0.tar.xz
+Source1  : https://github.com/curl/curl/releases/download/curl-7_74_0/curl-7.74.0.tar.xz.asc
 Summary  : Library to transfer files with ftp, http, etc.
 Group    : Development/Tools
 License  : MIT
@@ -46,9 +46,9 @@ BuildRequires : nghttp2-dev
 BuildRequires : nghttp2-dev32
 BuildRequires : pkg-config
 BuildRequires : pkg-config-dev
-BuildRequires : python-dev
 BuildRequires : zlib-dev
 BuildRequires : zlib-dev32
+BuildRequires : zstd-dev
 # Suppress generation of debuginfo
 %global debug_package %{nil}
 Patch1: 0001-Remove-use-of-DES.patch
@@ -56,14 +56,7 @@ Patch2: 0002-Add-pacrunner-call-for-autoproxy-resolution.patch
 Patch3: 0003-Check-the-state-file-pacdiscovery-sets.patch
 Patch4: 0004-Avoid-stripping-the-g-option.patch
 Patch5: 0005-Open-library-file-descriptors-with-O_CLOEXEC.patch
-Patch6: CVE-2017-1000254.nopatch
-Patch7: soname-compat.patch
-Patch8: cve-2018-16890.patch
-Patch9: cve-2019-3822.patch
-Patch10: cve-2019-3823.patch
-Patch11: CVE-2019-5435.patch
-Patch12: CVE-2019-5436.patch
-Patch13: CVE-2019-5481.patch
+Patch6: soname-compat.patch
 
 %description
 _   _ ____  _
@@ -99,21 +92,16 @@ license components for the compat-curl-gnutls-soname4 package.
 
 
 %prep
-%setup -q -n curl-7.63.0
+%setup -q -n curl-7.74.0
+cd %{_builddir}/curl-7.74.0
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
+%patch6 -p1
 pushd ..
-cp -a curl-7.63.0 build32
+cp -a curl-7.74.0 build32
 popd
 
 %build
@@ -121,11 +109,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568944423
+export SOURCE_DATE_EPOCH=1609913730
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
 %reconfigure --disable-static --disable-ldap \
 --without-winidn \
@@ -143,6 +131,7 @@ export CXXFLAGS="$CXXFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno
 --disable-tftp \
 --disable-pop3 \
 --disable-gopher \
+--enable-negotiate \
 --without-openssl \
 --with-gnutls --with-gssapi=/usr
 make  %{?_smp_mflags}
@@ -168,6 +157,7 @@ export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 --disable-tftp \
 --disable-pop3 \
 --disable-gopher \
+--enable-negotiate \
 --without-openssl \
 --with-gnutls  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags}
@@ -178,15 +168,15 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+make %{?_smp_mflags} check
 cd ../build32;
-make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
+make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1568944423
+export SOURCE_DATE_EPOCH=1609913730
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4
-cp COPYING %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4/COPYING
+cp %{_builddir}/curl-7.74.0/COPYING %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4/0a31fbdd5090bd461236bca4b1a86c79fd244d7a
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -205,6 +195,7 @@ rm -f %{buildroot}/usr/include/curl/curlver.h
 rm -f %{buildroot}/usr/include/curl/easy.h
 rm -f %{buildroot}/usr/include/curl/mprintf.h
 rm -f %{buildroot}/usr/include/curl/multi.h
+rm -f %{buildroot}/usr/include/curl/options.h
 rm -f %{buildroot}/usr/include/curl/stdcheaders.h
 rm -f %{buildroot}/usr/include/curl/system.h
 rm -f %{buildroot}/usr/include/curl/typecheck-gcc.h
@@ -230,6 +221,7 @@ rm -f %{buildroot}/usr/share/man/man3/CURLINFO_CONTENT_LENGTH_UPLOAD.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_CONTENT_LENGTH_UPLOAD_T.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_CONTENT_TYPE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_COOKIELIST.3
+rm -f %{buildroot}/usr/share/man/man3/CURLINFO_EFFECTIVE_METHOD.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_EFFECTIVE_URL.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_FILETIME.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_FILETIME_T.3
@@ -252,6 +244,7 @@ rm -f %{buildroot}/usr/share/man/man3/CURLINFO_PRIMARY_PORT.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_PRIVATE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_PROTOCOL.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_PROXYAUTH_AVAIL.3
+rm -f %{buildroot}/usr/share/man/man3/CURLINFO_PROXY_ERROR.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_PROXY_SSL_VERIFYRESULT.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_REDIRECT_COUNT.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_REDIRECT_TIME.3
@@ -259,6 +252,7 @@ rm -f %{buildroot}/usr/share/man/man3/CURLINFO_REDIRECT_TIME_T.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_REDIRECT_URL.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_REQUEST_SIZE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_RESPONSE_CODE.3
+rm -f %{buildroot}/usr/share/man/man3/CURLINFO_RETRY_AFTER.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_RTSP_CLIENT_CSEQ.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_RTSP_CSEQ_RECV.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_RTSP_SERVER_CSEQ.3
@@ -283,6 +277,7 @@ rm -f %{buildroot}/usr/share/man/man3/CURLINFO_TOTAL_TIME_T.3
 rm -f %{buildroot}/usr/share/man/man3/CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLMOPT_MAXCONNECTS.3
+rm -f %{buildroot}/usr/share/man/man3/CURLMOPT_MAX_CONCURRENT_STREAMS.3
 rm -f %{buildroot}/usr/share/man/man3/CURLMOPT_MAX_HOST_CONNECTIONS.3
 rm -f %{buildroot}/usr/share/man/man3/CURLMOPT_MAX_PIPELINE_LENGTH.3
 rm -f %{buildroot}/usr/share/man/man3/CURLMOPT_MAX_TOTAL_CONNECTIONS.3
@@ -299,6 +294,8 @@ rm -f %{buildroot}/usr/share/man/man3/CURLOPT_ABSTRACT_UNIX_SOCKET.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_ACCEPTTIMEOUT_MS.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_ACCEPT_ENCODING.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_ADDRESS_SCOPE.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_ALTSVC.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_ALTSVC_CTRL.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_APPEND.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_AUTOREFERER.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_BUFFERSIZE.3
@@ -369,6 +366,13 @@ rm -f %{buildroot}/usr/share/man/man3/CURLOPT_HEADER.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_HEADERDATA.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_HEADERFUNCTION.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_HEADEROPT.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_HSTS.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_HSTSREADDATA.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_HSTSREADFUNCTION.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_HSTSWRITEDATA.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_HSTSWRITEFUNCTION.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_HSTS_CTRL.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_HTTP09_ALLOWED.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_HTTP200ALIASES.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_HTTPAUTH.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_HTTPGET.3
@@ -388,6 +392,7 @@ rm -f %{buildroot}/usr/share/man/man3/CURLOPT_IOCTLDATA.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_IOCTLFUNCTION.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_IPRESOLVE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_ISSUERCERT.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_ISSUERCERT_BLOB.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_KEEP_SENDING_ON_ERROR.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_KEYPASSWD.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_KRBLEVEL.3
@@ -399,6 +404,8 @@ rm -f %{buildroot}/usr/share/man/man3/CURLOPT_LOW_SPEED_TIME.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_MAIL_AUTH.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_MAIL_FROM.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_MAIL_RCPT.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_MAIL_RCPT_ALLLOWFAILS.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_MAXAGE_CONN.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_MAXCONNECTS.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_MAXFILESIZE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_MAXFILESIZE_LARGE.3
@@ -444,13 +451,17 @@ rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXYUSERPWD.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_CAINFO.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_CAPATH.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_CRLFILE.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_ISSUERCERT.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_ISSUERCERT_BLOB.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_KEYPASSWD.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_PINNEDPUBLICKEY.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_SERVICE_NAME.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_SSLCERT.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_SSLCERTTYPE.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_SSLCERT_BLOB.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_SSLKEY.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_SSLKEYTYPE.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_SSLKEY_BLOB.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_SSLVERSION.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_SSL_CIPHER_LIST.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_SSL_OPTIONS.3
@@ -481,6 +492,7 @@ rm -f %{buildroot}/usr/share/man/man3/CURLOPT_RTSP_SERVER_CSEQ.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_RTSP_SESSION_ID.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_RTSP_STREAM_URI.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_RTSP_TRANSPORT.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SASL_AUTHZID.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SASL_IR.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SEEKDATA.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SEEKFUNCTION.3
@@ -501,14 +513,17 @@ rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSH_PRIVATE_KEYFILE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSH_PUBLIC_KEYFILE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSLCERT.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSLCERTTYPE.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSLCERT_BLOB.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSLENGINE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSLENGINE_DEFAULT.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSLKEY.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSLKEYTYPE.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSLKEY_BLOB.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSLVERSION.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSL_CIPHER_LIST.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSL_CTX_DATA.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSL_CTX_FUNCTION.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSL_EC_CURVES.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSL_ENABLE_ALPN.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSL_ENABLE_NPN.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_SSL_FALSESTART.3
@@ -539,6 +554,8 @@ rm -f %{buildroot}/usr/share/man/man3/CURLOPT_TLS13_CIPHERS.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_TLSAUTH_PASSWORD.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_TLSAUTH_TYPE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_TLSAUTH_USERNAME.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_TRAILERDATA.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_TRAILERFUNCTION.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_TRANSFERTEXT.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_TRANSFER_ENCODING.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_UNIX_SOCKET_PATH.3
@@ -563,6 +580,9 @@ rm -f %{buildroot}/usr/share/man/man3/curl_easy_duphandle.3
 rm -f %{buildroot}/usr/share/man/man3/curl_easy_escape.3
 rm -f %{buildroot}/usr/share/man/man3/curl_easy_getinfo.3
 rm -f %{buildroot}/usr/share/man/man3/curl_easy_init.3
+rm -f %{buildroot}/usr/share/man/man3/curl_easy_option_by_id.3
+rm -f %{buildroot}/usr/share/man/man3/curl_easy_option_by_name.3
+rm -f %{buildroot}/usr/share/man/man3/curl_easy_option_next.3
 rm -f %{buildroot}/usr/share/man/man3/curl_easy_pause.3
 rm -f %{buildroot}/usr/share/man/man3/curl_easy_perform.3
 rm -f %{buildroot}/usr/share/man/man3/curl_easy_recv.3
@@ -603,6 +623,7 @@ rm -f %{buildroot}/usr/share/man/man3/curl_multi_fdset.3
 rm -f %{buildroot}/usr/share/man/man3/curl_multi_info_read.3
 rm -f %{buildroot}/usr/share/man/man3/curl_multi_init.3
 rm -f %{buildroot}/usr/share/man/man3/curl_multi_perform.3
+rm -f %{buildroot}/usr/share/man/man3/curl_multi_poll.3
 rm -f %{buildroot}/usr/share/man/man3/curl_multi_remove_handle.3
 rm -f %{buildroot}/usr/share/man/man3/curl_multi_setopt.3
 rm -f %{buildroot}/usr/share/man/man3/curl_multi_socket.3
@@ -611,6 +632,7 @@ rm -f %{buildroot}/usr/share/man/man3/curl_multi_socket_all.3
 rm -f %{buildroot}/usr/share/man/man3/curl_multi_strerror.3
 rm -f %{buildroot}/usr/share/man/man3/curl_multi_timeout.3
 rm -f %{buildroot}/usr/share/man/man3/curl_multi_wait.3
+rm -f %{buildroot}/usr/share/man/man3/curl_multi_wakeup.3
 rm -f %{buildroot}/usr/share/man/man3/curl_share_cleanup.3
 rm -f %{buildroot}/usr/share/man/man3/curl_share_init.3
 rm -f %{buildroot}/usr/share/man/man3/curl_share_setopt.3
@@ -645,13 +667,13 @@ rm -f %{buildroot}/usr/share/man/man3/libcurl.3
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libcurl-gnutls.so.4
-/usr/lib64/libcurl-gnutls.so.4.5.0
+/usr/lib64/libcurl-gnutls.so.4.7.0
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libcurl-gnutls.so.4
-/usr/lib32/libcurl-gnutls.so.4.5.0
+/usr/lib32/libcurl-gnutls.so.4.7.0
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/compat-curl-gnutls-soname4/COPYING
+/usr/share/package-licenses/compat-curl-gnutls-soname4/0a31fbdd5090bd461236bca4b1a86c79fd244d7a

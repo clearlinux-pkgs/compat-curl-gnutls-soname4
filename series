@@ -3,11 +3,4 @@
 0003-Check-the-state-file-pacdiscovery-sets.patch
 0004-Avoid-stripping-the-g-option.patch
 0005-Open-library-file-descriptors-with-O_CLOEXEC.patch
-CVE-2017-1000254.nopatch
 soname-compat.patch
-cve-2018-16890.patch
-cve-2019-3822.patch
-cve-2019-3823.patch
-CVE-2019-5435.patch
-CVE-2019-5436.patch
-CVE-2019-5481.patch

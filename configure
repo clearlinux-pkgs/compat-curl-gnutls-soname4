@@ -14,5 +14,6 @@
 --disable-tftp
 --disable-pop3
 --disable-gopher
+--enable-negotiate
 --without-openssl
 --with-gnutls

@@ -3,6 +3,8 @@ Configure miss: whether to enable strict compiler warnings
 Configure miss: whether to enable compiler warnings as errors
 Configure miss: whether to enable curl debug memory tracking
 Configure miss: whether to enable c-ares for DNS lookups
+Configure miss: whether to enable ECH support
+Configure miss: code coverage support
 Configure miss: if OS is AIX (to define _ALL_SOURCE)
 Configure miss: if _THREAD_SAFE is already defined
 Configure miss: if _THREAD_SAFE is actually needed
@@ -22,27 +24,21 @@ Configure miss: whether to support tftp
 Configure miss: whether to support pop3
 Configure miss: whether to support smb
 Configure miss: whether to support gopher
+Configure miss: whether to support mqtt
 Configure miss: whether to use libgcc
 Configure miss: if X/Open network library is required
+Configure miss: proto/bsdsocket.h
 Configure miss: clock_gettime in libraries
 Configure miss: BrotliDecoderDecompress in -lbrotlidec
-Configure miss: brotli/decode.h usability
-Configure miss: brotli/decode.h presence
 Configure miss: brotli/decode.h
-Configure miss: if argv can be written to
-Configure miss: gss.h usability
-Configure miss: gss.h presence
 Configure miss: gss.h
-Configure miss: gssapi/gssapi.h usability
-Configure miss: gssapi/gssapi.h presence
 Configure miss: gssapi/gssapi.h
 Configure miss: gssapi/gssapi_generic.h
 Configure miss: gssapi/gssapi_krb5.h
-Configure miss: gssapi.h usability
-Configure miss: gssapi.h presence
 Configure miss: gssapi.h
 Configure miss: whether to enable Windows native SSL/TLS (Windows native builds only)
-Configure miss: whether to enable Apple OS native SSL/TLS
+Configure miss: whether to enable Secure Transport
+Configure miss: whether to enable Amiga native SSL/TLS (AmiSSL)
 Configure miss: openssl options with pkg-config
 Configure miss: HMAC_Update in -lcrypto
 Configure miss: HMAC_Init_ex in -lcrypto
@@ -55,11 +51,9 @@ Configure miss: library containing psl_builtin
 Configure miss: RTMP_Init in -lrtmp
 Configure miss: whether versioned symbols are wanted
 Configure miss: whether to enable Windows native IDN (Windows native builds only)
-Configure miss: libidn2 options with pkg-config
-Configure miss: if idn2_lookup_ul can be linked
-Configure miss: idn2.h usability
-Configure miss: idn2.h presence
-Configure miss: idn2.h
+Configure miss: libngtcp2 options with pkg-config
+Configure miss: quiche options with pkg-config
+Configure miss: fish options with pkg-config
 Configure miss: memory.h
 Configure miss: netinet/in6.h
 Configure miss: socket.h
@@ -68,11 +62,15 @@ Configure miss: stropts.h
 Configure miss: gnroff
 Configure miss: whether to enable SSPI support (Windows native builds only)
 Configure miss: whether to enable NTLM delegation to winbind's helper
+Configure miss: whether to support alt-svc
+Configure miss: whether to support HSTS
 Configure miss: whether to enable debug build options
 Configure miss: whether to enable strict compiler warnings
 Configure miss: whether to enable compiler warnings as errors
 Configure miss: whether to enable curl debug memory tracking
 Configure miss: whether to enable c-ares for DNS lookups
+Configure miss: whether to enable ECH support
+Configure miss: code coverage support
 Configure miss: if OS is AIX (to define _ALL_SOURCE)
 Configure miss: if _THREAD_SAFE is already defined
 Configure miss: if _THREAD_SAFE is actually needed
@@ -93,17 +91,18 @@ Configure miss: whether to support tftp
 Configure miss: whether to support pop3
 Configure miss: whether to support smb
 Configure miss: whether to support gopher
+Configure miss: whether to support mqtt
 Configure miss: whether to use libgcc
 Configure miss: if X/Open network library is required
+Configure miss: proto/bsdsocket.h
 Configure miss: clock_gettime in libraries
 Configure miss: BrotliDecoderDecompress in -lbrotlidec
-Configure miss: brotli/decode.h usability
-Configure miss: brotli/decode.h presence
 Configure miss: brotli/decode.h
-Configure miss: if argv can be written to
+Configure miss: ZSTD_createDStream in -lzstd
 Configure miss: if GSS-API support is requested
 Configure miss: whether to enable Windows native SSL/TLS (Windows native builds only)
-Configure miss: whether to enable Apple OS native SSL/TLS
+Configure miss: whether to enable Secure Transport
+Configure miss: whether to enable Amiga native SSL/TLS (AmiSSL)
 Configure miss: openssl options with pkg-config
 Configure miss: HMAC_Update in -lcrypto
 Configure miss: HMAC_Init_ex in -lcrypto
@@ -116,11 +115,10 @@ Configure miss: library containing psl_builtin
 Configure miss: RTMP_Init in -lrtmp
 Configure miss: whether versioned symbols are wanted
 Configure miss: whether to enable Windows native IDN (Windows native builds only)
-Configure miss: libidn2 options with pkg-config
 Configure miss: if idn2_lookup_ul can be linked
-Configure miss: idn2.h usability
-Configure miss: idn2.h presence
-Configure miss: idn2.h
+Configure miss: libngtcp2 options with pkg-config
+Configure miss: quiche options with pkg-config
+Configure miss: fish options with pkg-config
 Configure miss: memory.h
 Configure miss: netinet/in6.h
 Configure miss: socket.h
@@ -129,3 +127,5 @@ Configure miss: stropts.h
 Configure miss: gnroff
 Configure miss: whether to enable SSPI support (Windows native builds only)
 Configure miss: whether to enable NTLM delegation to winbind's helper
+Configure miss: whether to support alt-svc
+Configure miss: whether to support HSTS
