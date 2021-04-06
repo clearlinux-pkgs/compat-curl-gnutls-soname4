@@ -10,23 +10,23 @@ Signed-off-by: Arzhan Kinzhalin <arzhan.i.kinzhalin@intel.com>
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 2304775..77397b1 100755
+index f662481..916904f 100755
 --- a/configure.ac
 +++ b/configure.ac
-@@ -5005,7 +5005,7 @@ if test "x$CURL_DISABLE_CRYPTO_AUTH" != "x1"; then
-       -o "x$GNUTLS_ENABLED" = "x1" -o "x$MBEDTLS_ENABLED" = "x1" \
-       -o "x$NSS_ENABLED" = "x1" -o "x$SECURETRANSPORT_ENABLED" = "x1" \
-       -o "x$WOLFSSL_NTLM" = "x1"; then
+@@ -5238,7 +5238,7 @@ if test "x$CURL_DISABLE_CRYPTO_AUTH" != "x1"; then
+ 
+   if test "x$use_curl_ntlm_core" = "xyes" \
+       -o "x$USE_WINDOWS_SSPI" = "x1"; then
 -    SUPPORT_FEATURES="$SUPPORT_FEATURES NTLM"
 +    SUPPORT_FEATURES="$SUPPORT_FEATURES"
  
      if test "x$CURL_DISABLE_HTTP" != "x1" -a \
          "x$NTLM_WB_ENABLED" = "x1"; then
 diff --git a/lib/curl_setup.h b/lib/curl_setup.h
-index 3872dbb..98f839d 100644
+index cf1c26a..a55853d 100644
 --- a/lib/curl_setup.h
 +++ b/lib/curl_setup.h
-@@ -629,7 +629,7 @@ int netware_init(void);
+@@ -647,7 +647,7 @@ int netware_init(void);
    defined(USE_OS400CRYPTO) || defined(USE_WIN32_CRYPTO) ||              \
    (defined(USE_WOLFSSL) && defined(HAVE_WOLFSSL_DES_ECB_ENCRYPT))
  

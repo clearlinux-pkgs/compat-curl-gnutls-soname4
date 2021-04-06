@@ -1,131 +1,141 @@
-Configure miss: whether to enable debug build options
-Configure miss: whether to enable strict compiler warnings
-Configure miss: whether to enable compiler warnings as errors
-Configure miss: whether to enable curl debug memory tracking
-Configure miss: whether to enable c-ares for DNS lookups
-Configure miss: whether to enable ECH support
-Configure miss: code coverage support
-Configure miss: if OS is AIX (to define _ALL_SOURCE)
-Configure miss: if _THREAD_SAFE is already defined
-Configure miss: if _THREAD_SAFE is actually needed
-Configure miss: if _THREAD_SAFE is onwards defined
-Configure miss: whether to build shared libraries with -no-undefined
-Configure miss: whether to build shared libraries with -mimpure-text
-Configure miss: whether to build static libraries only
-Configure miss: if compiler optimizer assumed setting might be used
-Configure miss: whether build target is a native Windows one
-Configure miss: whether build target supports WIN32 file API
-Configure miss: good-to-use Mac CFLAGS
-Configure miss: to see if the compiler supports __builtin_available()
-Configure miss: whether to support ldap
-Configure miss: whether to support ldaps
-Configure miss: whether to support telnet
-Configure miss: whether to support tftp
-Configure miss: whether to support pop3
-Configure miss: whether to support smb
-Configure miss: whether to support gopher
-Configure miss: whether to support mqtt
-Configure miss: whether to use libgcc
-Configure miss: if X/Open network library is required
-Configure miss: proto/bsdsocket.h
-Configure miss: clock_gettime in libraries
 Configure miss: BrotliDecoderDecompress in -lbrotlidec
+Configure miss: BrotliDecoderDecompress in -lbrotlidec
+Configure miss: HMAC_Init_ex in -lcrypto
+Configure miss: HMAC_Init_ex in -lcrypto
+Configure miss: HMAC_Update in -lcrypto
+Configure miss: HMAC_Update in -lcrypto
+Configure miss: OpenSSL linking with -ldl
+Configure miss: OpenSSL linking with -ldl
+Configure miss: OpenSSL linking with -ldl and -lpthread
+Configure miss: OpenSSL linking with -ldl and -lpthread
+Configure miss: RTMP_Init in -lrtmp
+Configure miss: RTMP_Init in -lrtmp
+Configure miss: ZSTD_createDStream in -lzstd
 Configure miss: brotli/decode.h
+Configure miss: brotli/decode.h
+Configure miss: code coverage support
+Configure miss: code coverage support
+Configure miss: fish options with pkg-config
+Configure miss: fish options with pkg-config
+Configure miss: gcc options needed to detect all undeclared functions
+Configure miss: gcc options needed to detect all undeclared functions
+Configure miss: gnroff
+Configure miss: gnroff
+Configure miss: good-to-use Mac CFLAGS
+Configure miss: good-to-use Mac CFLAGS
 Configure miss: gss.h
+Configure miss: gssapi.h
 Configure miss: gssapi/gssapi.h
 Configure miss: gssapi/gssapi_generic.h
 Configure miss: gssapi/gssapi_krb5.h
-Configure miss: gssapi.h
-Configure miss: whether to enable Windows native SSL/TLS (Windows native builds only)
-Configure miss: whether to enable Secure Transport
-Configure miss: whether to enable Amiga native SSL/TLS (AmiSSL)
-Configure miss: openssl options with pkg-config
-Configure miss: HMAC_Update in -lcrypto
-Configure miss: HMAC_Init_ex in -lcrypto
-Configure miss: OpenSSL linking with -ldl
-Configure miss: OpenSSL linking with -ldl and -lpthread
-Configure miss: nettle_MD5Init in -lgnutls
-Configure miss: gcry_control in -lgnutls
-Configure miss: whether to use builtin CA store of SSL library
-Configure miss: library containing psl_builtin
-Configure miss: RTMP_Init in -lrtmp
-Configure miss: whether versioned symbols are wanted
-Configure miss: whether to enable Windows native IDN (Windows native builds only)
-Configure miss: libngtcp2 options with pkg-config
-Configure miss: quiche options with pkg-config
-Configure miss: fish options with pkg-config
-Configure miss: memory.h
-Configure miss: netinet/in6.h
-Configure miss: socket.h
+Configure miss: if GSS-API support is requested
+Configure miss: if OS is AIX (to define _ALL_SOURCE)
+Configure miss: if OS is AIX (to define _ALL_SOURCE)
+Configure miss: if X/Open network library is required
+Configure miss: if X/Open network library is required
+Configure miss: if _THREAD_SAFE is actually needed
+Configure miss: if _THREAD_SAFE is actually needed
+Configure miss: if _THREAD_SAFE is already defined
+Configure miss: if _THREAD_SAFE is already defined
+Configure miss: if _THREAD_SAFE is onwards defined
+Configure miss: if _THREAD_SAFE is onwards defined
+Configure miss: if compiler optimizer assumed setting might be used
+Configure miss: if compiler optimizer assumed setting might be used
+Configure miss: if gmtime_r is prototyped
+Configure miss: if gmtime_r is prototyped
+Configure miss: if gmtime_r might be used
+Configure miss: if gmtime_r might be used
+Configure miss: if idn2_lookup_ul can be linked
+Configure miss: if localtime_r is prototyped
+Configure miss: if localtime_r is prototyped
+Configure miss: if localtime_r might be used
+Configure miss: if localtime_r might be used
 Configure miss: if time_t is unsigned
+Configure miss: if time_t is unsigned
+Configure miss: libngtcp2 options with pkg-config
+Configure miss: libngtcp2 options with pkg-config
+Configure miss: library containing gsasl_init
+Configure miss: library containing gsasl_init
+Configure miss: library containing psl_builtin
+Configure miss: library containing psl_builtin
+Configure miss: memory.h
+Configure miss: memory.h
+Configure miss: monotonic clock_gettime
+Configure miss: monotonic clock_gettime
+Configure miss: netinet/in6.h
+Configure miss: netinet/in6.h
+Configure miss: nettle_MD5Init in -lgnutls
+Configure miss: nettle_MD5Init in -lgnutls
+Configure miss: openssl options with pkg-config
+Configure miss: openssl options with pkg-config
+Configure miss: proto/bsdsocket.h
+Configure miss: proto/bsdsocket.h
+Configure miss: socket.h
+Configure miss: socket.h
 Configure miss: stropts.h
-Configure miss: gnroff
-Configure miss: whether to enable SSPI support (Windows native builds only)
+Configure miss: stropts.h
+Configure miss: to see if the compiler supports __builtin_available()
+Configure miss: to see if the compiler supports __builtin_available()
+Configure miss: whether build target is a native Windows one
+Configure miss: whether build target is a native Windows one
+Configure miss: whether build target supports WIN32 crypto API
+Configure miss: whether build target supports WIN32 crypto API
+Configure miss: whether build target supports WIN32 file API
+Configure miss: whether build target supports WIN32 file API
+Configure miss: whether to build shared libraries with -mimpure-text
+Configure miss: whether to build shared libraries with -mimpure-text
+Configure miss: whether to build shared libraries with -no-undefined
+Configure miss: whether to build shared libraries with -no-undefined
+Configure miss: whether to build static libraries only
+Configure miss: whether to build static libraries only
+Configure miss: whether to build static libraries with PIC
+Configure miss: whether to enable Amiga native SSL/TLS (AmiSSL)
+Configure miss: whether to enable Amiga native SSL/TLS (AmiSSL)
+Configure miss: whether to enable ECH support
+Configure miss: whether to enable ECH support
 Configure miss: whether to enable NTLM delegation to winbind's helper
-Configure miss: whether to support alt-svc
-Configure miss: whether to support HSTS
-Configure miss: whether to enable debug build options
-Configure miss: whether to enable strict compiler warnings
+Configure miss: whether to enable NTLM delegation to winbind's helper
+Configure miss: whether to enable SSPI support (Windows native builds only)
+Configure miss: whether to enable SSPI support (Windows native builds only)
+Configure miss: whether to enable Secure Transport
+Configure miss: whether to enable Secure Transport
+Configure miss: whether to enable Windows native IDN (Windows native builds only)
+Configure miss: whether to enable Windows native IDN (Windows native builds only)
+Configure miss: whether to enable Windows native SSL/TLS (Windows native builds only)
+Configure miss: whether to enable Windows native SSL/TLS (Windows native builds only)
+Configure miss: whether to enable c-ares for DNS lookups
+Configure miss: whether to enable c-ares for DNS lookups
+Configure miss: whether to enable compiler warnings as errors
 Configure miss: whether to enable compiler warnings as errors
 Configure miss: whether to enable curl debug memory tracking
-Configure miss: whether to enable c-ares for DNS lookups
-Configure miss: whether to enable ECH support
-Configure miss: code coverage support
-Configure miss: if OS is AIX (to define _ALL_SOURCE)
-Configure miss: if _THREAD_SAFE is already defined
-Configure miss: if _THREAD_SAFE is actually needed
-Configure miss: if _THREAD_SAFE is onwards defined
-Configure miss: whether to build shared libraries with -no-undefined
-Configure miss: whether to build shared libraries with -mimpure-text
-Configure miss: whether to build static libraries with PIC
-Configure miss: whether to build static libraries only
-Configure miss: if compiler optimizer assumed setting might be used
-Configure miss: whether build target is a native Windows one
-Configure miss: whether build target supports WIN32 file API
-Configure miss: good-to-use Mac CFLAGS
-Configure miss: to see if the compiler supports __builtin_available()
+Configure miss: whether to enable curl debug memory tracking
+Configure miss: whether to enable debug build options
+Configure miss: whether to enable debug build options
+Configure miss: whether to enable strict compiler warnings
+Configure miss: whether to enable strict compiler warnings
+Configure miss: whether to support HSTS
+Configure miss: whether to support HSTS
+Configure miss: whether to support alt-svc
+Configure miss: whether to support alt-svc
+Configure miss: whether to support gopher
+Configure miss: whether to support gopher
+Configure miss: whether to support ldap
 Configure miss: whether to support ldap
 Configure miss: whether to support ldaps
-Configure miss: whether to support telnet
-Configure miss: whether to support tftp
+Configure miss: whether to support ldaps
+Configure miss: whether to support mqtt
+Configure miss: whether to support mqtt
+Configure miss: whether to support pop3
 Configure miss: whether to support pop3
 Configure miss: whether to support smb
-Configure miss: whether to support gopher
-Configure miss: whether to support mqtt
-Configure miss: whether to use libgcc
-Configure miss: if X/Open network library is required
-Configure miss: proto/bsdsocket.h
-Configure miss: clock_gettime in libraries
-Configure miss: BrotliDecoderDecompress in -lbrotlidec
-Configure miss: brotli/decode.h
-Configure miss: ZSTD_createDStream in -lzstd
-Configure miss: if GSS-API support is requested
-Configure miss: whether to enable Windows native SSL/TLS (Windows native builds only)
-Configure miss: whether to enable Secure Transport
-Configure miss: whether to enable Amiga native SSL/TLS (AmiSSL)
-Configure miss: openssl options with pkg-config
-Configure miss: HMAC_Update in -lcrypto
-Configure miss: HMAC_Init_ex in -lcrypto
-Configure miss: OpenSSL linking with -ldl
-Configure miss: OpenSSL linking with -ldl and -lpthread
-Configure miss: nettle_MD5Init in -lgnutls
-Configure miss: gcry_control in -lgnutls
+Configure miss: whether to support smb
+Configure miss: whether to support telnet
+Configure miss: whether to support telnet
+Configure miss: whether to support tftp
+Configure miss: whether to support tftp
 Configure miss: whether to use builtin CA store of SSL library
-Configure miss: library containing psl_builtin
-Configure miss: RTMP_Init in -lrtmp
+Configure miss: whether to use builtin CA store of SSL library
+Configure miss: whether to use libgcc
+Configure miss: whether to use libgcc
 Configure miss: whether versioned symbols are wanted
-Configure miss: whether to enable Windows native IDN (Windows native builds only)
-Configure miss: if idn2_lookup_ul can be linked
-Configure miss: libngtcp2 options with pkg-config
-Configure miss: quiche options with pkg-config
-Configure miss: fish options with pkg-config
-Configure miss: memory.h
-Configure miss: netinet/in6.h
-Configure miss: socket.h
-Configure miss: if time_t is unsigned
-Configure miss: stropts.h
-Configure miss: gnroff
-Configure miss: whether to enable SSPI support (Windows native builds only)
-Configure miss: whether to enable NTLM delegation to winbind's helper
-Configure miss: whether to support alt-svc
-Configure miss: whether to support HSTS
+Configure miss: whether versioned symbols are wanted

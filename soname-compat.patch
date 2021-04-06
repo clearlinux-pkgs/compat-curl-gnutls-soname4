@@ -1,6 +1,6 @@
-From caed24781a1835404323db0aeeb691409d40da9e Mon Sep 17 00:00:00 2001
+From 005e6ed62e34a95312babae35f9b1aaf5db29c19 Mon Sep 17 00:00:00 2001
 From: Patrick McCarty <patrick.mccarty@intel.com>
-Date: Wed, 6 Jan 2021 05:43:11 +0000
+Date: Tue, 6 Apr 2021 23:16:23 +0000
 Subject: [PATCH] Switch soname to curl-gnutls for binary compat
 
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
@@ -12,7 +12,7 @@ Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
  4 files changed, 24 insertions(+), 24 deletions(-)
 
 diff --git a/docs/examples/Makefile.am b/docs/examples/Makefile.am
-index b0012ae..47dd266 100644
+index 1da1e8d..a2ffd3d 100644
 --- a/docs/examples/Makefile.am
 +++ b/docs/examples/Makefile.am
 @@ -48,9 +48,9 @@ LIBS = $(BLANK_AT_MAKETIME)
@@ -124,7 +124,7 @@ index dff248f..8cbb430 100644
  
  curl_LDFLAGS = @LIBMETALINK_LDFLAGS@
 diff --git a/tests/libtest/Makefile.am b/tests/libtest/Makefile.am
-index 4011e35..ece00cf 100644
+index 82c3ade..8d27433 100644
 --- a/tests/libtest/Makefile.am
 +++ b/tests/libtest/Makefile.am
 @@ -57,11 +57,11 @@ CLEANFILES = lib1521.c

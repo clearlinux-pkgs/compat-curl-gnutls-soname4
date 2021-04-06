@@ -12,17 +12,20 @@ Assumptions of this patch are:
  - The decision as to when to refresh the proxy script is also made
   by pacrunner
 
+2021-04-01: Rebased for 7.76.0. Adjustments were needed to accommodate
+            refactoring in https://github.com/curl/curl/pull/6798.
+
 Signed-off-by: Brad T. Peters <brad.t.peters@intel.com>
 Signed-off-by: Arzhan Kinzhalin <arzhan.i.kinzhalin@intel.com>
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
  configure.ac    |   2 +
  lib/Makefile.am |   4 +-
- lib/url.c       | 132 ++++++++++++++++++++++++++++++++++++++++++++++--
- 3 files changed, 132 insertions(+), 6 deletions(-)
+ lib/url.c       | 133 ++++++++++++++++++++++++++++++++++++++++++++++--
+ 3 files changed, 133 insertions(+), 6 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 77397b1..217173e 100755
+index 916904f..7c3a067 100755
 --- a/configure.ac
 +++ b/configure.ac
 @@ -41,6 +41,8 @@ AC_CONFIG_MACRO_DIR([m4])
@@ -35,7 +38,7 @@ index 77397b1..217173e 100755
  CURL_CHECK_OPTION_OPTIMIZE
  CURL_CHECK_OPTION_WARNINGS
 diff --git a/lib/Makefile.am b/lib/Makefile.am
-index 78b068f..33785c8 100644
+index b51796f..bdbf7eb 100644
 --- a/lib/Makefile.am
 +++ b/lib/Makefile.am
 @@ -85,8 +85,8 @@ AM_LDFLAGS =
@@ -50,7 +53,7 @@ index 78b068f..33785c8 100644
  if CURL_LT_SHLIB_USE_VERSION_INFO
  libcurl_la_LDFLAGS_EXTRA += $(VERSIONINFO)
 diff --git a/lib/url.c b/lib/url.c
-index 8af33c0..d0e8039 100644
+index 19fcfb8..7e1e875 100644
 --- a/lib/url.c
 +++ b/lib/url.c
 @@ -67,6 +67,11 @@
@@ -65,7 +68,7 @@ index 8af33c0..d0e8039 100644
  #include "urldata.h"
  #include "netrc.h"
  
-@@ -130,6 +135,7 @@ bool curl_win32_idn_to_ascii(const char *in, char **out);
+@@ -131,6 +136,7 @@ bool curl_win32_idn_to_ascii(const char *in, char **out);
  #include "memdebug.h"
  
  static void conn_free(struct connectdata *conn);
@@ -73,12 +76,13 @@ index 8af33c0..d0e8039 100644
  
  /* Some parts of the code (e.g. chunked encoding) assume this buffer has at
   * more than just a few bytes to play with. Don't let it become too small or
-@@ -2175,9 +2181,11 @@ static bool check_noproxy(const char *name, const char *no_proxy)
- * name and is not limited to HTTP proxies only.
+@@ -2249,9 +2255,12 @@ static bool check_noproxy(const char *name, const char *no_proxy)
  * The returned pointer must be freed by the caller (unless NULL)
  ****************************************************************/
--static char *detect_proxy(struct connectdata *conn)
-+static char *detect_proxy(struct connectdata *conn, char *url)
+ static char *detect_proxy(struct Curl_easy *data,
+-                          struct connectdata *conn)
++                          struct connectdata *conn,
++                          char *url)
  {
    char *proxy = NULL;
 +  char proxy_tmp[256];
@@ -86,7 +90,7 @@ index 8af33c0..d0e8039 100644
  
    /* If proxy was not specified, we check for default proxy environment
     * variables, to enable i.e Lynx compliance:
-@@ -2233,7 +2241,18 @@ static char *detect_proxy(struct connectdata *conn)
+@@ -2310,7 +2319,18 @@ static char *detect_proxy(struct Curl_easy *data,
    if(prox) {
      proxy = prox; /* use this */
    }
@@ -106,7 +110,7 @@ index 8af33c0..d0e8039 100644
      envp = (char *)"all_proxy";
      proxy = curl_getenv(envp); /* default proxy to use */
      if(!proxy) {
-@@ -2471,10 +2490,12 @@ static CURLcode create_conn_helper_init_proxy(struct connectdata *conn)
+@@ -2571,10 +2591,12 @@ static CURLcode create_conn_helper_init_proxy(struct Curl_easy *data,
      Curl_safefree(proxy);
      Curl_safefree(socksproxy);
    }
@@ -114,14 +118,14 @@ index 8af33c0..d0e8039 100644
    else if(!proxy && !socksproxy)
 +#ifndef CURL_DISABLE_HTTP
      /* if the host is not in the noproxy list, detect proxy. */
--    proxy = detect_proxy(conn);
-+    proxy = detect_proxy(conn, data->change.url);
+-    proxy = detect_proxy(data, conn);
++    proxy = detect_proxy(data, conn, data->state.url);
 +#else  /* !CURL_DISABLE_HTTP */
 +    proxy = NULL;
  #endif /* CURL_DISABLE_HTTP */
  
    Curl_safefree(no_proxy);
-@@ -3388,6 +3409,109 @@ static void reuse_conn(struct connectdata *old_conn,
+@@ -3485,6 +3507,109 @@ static void reuse_conn(struct Curl_easy *data,
  #endif
  }
  

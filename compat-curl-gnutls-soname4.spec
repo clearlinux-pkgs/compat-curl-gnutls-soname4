@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x5CC908FDB71E12C2 (daniel@haxx.se)
 #
 Name     : compat-curl-gnutls-soname4
-Version  : 7.74.0
-Release  : 9
-URL      : https://github.com/curl/curl/releases/download/curl-7_74_0/curl-7.74.0.tar.xz
-Source0  : https://github.com/curl/curl/releases/download/curl-7_74_0/curl-7.74.0.tar.xz
-Source1  : https://github.com/curl/curl/releases/download/curl-7_74_0/curl-7.74.0.tar.xz.asc
+Version  : 7.76.0
+Release  : 10
+URL      : https://github.com/curl/curl/releases/download/curl-7_76_0/curl-7.76.0.tar.xz
+Source0  : https://github.com/curl/curl/releases/download/curl-7_76_0/curl-7.76.0.tar.xz
+Source1  : https://github.com/curl/curl/releases/download/curl-7_76_0/curl-7.76.0.tar.xz.asc
 Summary  : Library to transfer files with ftp, http, etc.
 Group    : Development/Tools
 License  : MIT
@@ -92,8 +92,8 @@ license components for the compat-curl-gnutls-soname4 package.
 
 
 %prep
-%setup -q -n curl-7.74.0
-cd %{_builddir}/curl-7.74.0
+%setup -q -n curl-7.76.0
+cd %{_builddir}/curl-7.76.0
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -101,7 +101,7 @@ cd %{_builddir}/curl-7.74.0
 %patch5 -p1
 %patch6 -p1
 pushd ..
-cp -a curl-7.74.0 build32
+cp -a curl-7.76.0 build32
 popd
 
 %build
@@ -109,7 +109,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1609913730
+export SOURCE_DATE_EPOCH=1617752581
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$FFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -173,10 +173,10 @@ cd ../build32;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1609913730
+export SOURCE_DATE_EPOCH=1617752581
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4
-cp %{_builddir}/curl-7.74.0/COPYING %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4/0a31fbdd5090bd461236bca4b1a86c79fd244d7a
+cp %{_builddir}/curl-7.76.0/COPYING %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4/73bcd04aed1c45b611fd34aaa29e72069a49049b
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -250,6 +250,7 @@ rm -f %{buildroot}/usr/share/man/man3/CURLINFO_REDIRECT_COUNT.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_REDIRECT_TIME.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_REDIRECT_TIME_T.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_REDIRECT_URL.3
+rm -f %{buildroot}/usr/share/man/man3/CURLINFO_REFERER.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_REQUEST_SIZE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_RESPONSE_CODE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLINFO_RETRY_AFTER.3
@@ -298,6 +299,7 @@ rm -f %{buildroot}/usr/share/man/man3/CURLOPT_ALTSVC.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_ALTSVC_CTRL.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_APPEND.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_AUTOREFERER.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_AWS_SIGV4.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_BUFFERSIZE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_CAINFO.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_CAPATH.3
@@ -336,6 +338,9 @@ rm -f %{buildroot}/usr/share/man/man3/CURLOPT_DNS_LOCAL_IP6.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_DNS_SERVERS.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_DNS_SHUFFLE_ADDRESSES.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_DNS_USE_GLOBAL_CACHE.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_DOH_SSL_VERIFYHOST.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_DOH_SSL_VERIFYPEER.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_DOH_SSL_VERIFYSTATUS.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_DOH_URL.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_EGDSOCKET.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_ERRORBUFFER.3
@@ -676,4 +681,4 @@ rm -f %{buildroot}/usr/share/man/man3/libcurl.3
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/compat-curl-gnutls-soname4/0a31fbdd5090bd461236bca4b1a86c79fd244d7a
+/usr/share/package-licenses/compat-curl-gnutls-soname4/73bcd04aed1c45b611fd34aaa29e72069a49049b
