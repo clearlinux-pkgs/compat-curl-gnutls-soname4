@@ -1,18 +1,12 @@
 Configure miss: BrotliDecoderDecompress in -lbrotlidec
 Configure miss: BrotliDecoderDecompress in -lbrotlidec
-Configure miss: HMAC_Init_ex in -lcrypto
-Configure miss: HMAC_Init_ex in -lcrypto
-Configure miss: HMAC_Update in -lcrypto
-Configure miss: HMAC_Update in -lcrypto
-Configure miss: OpenSSL linking with -ldl
-Configure miss: OpenSSL linking with -ldl
-Configure miss: OpenSSL linking with -ldl and -lpthread
-Configure miss: OpenSSL linking with -ldl and -lpthread
 Configure miss: RTMP_Init in -lrtmp
 Configure miss: RTMP_Init in -lrtmp
 Configure miss: ZSTD_createDStream in -lzstd
 Configure miss: brotli/decode.h
 Configure miss: brotli/decode.h
+Configure miss: clock_gettime in libraries
+Configure miss: clock_gettime in libraries
 Configure miss: code coverage support
 Configure miss: code coverage support
 Configure miss: fish options with pkg-config
@@ -21,8 +15,8 @@ Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: gnroff
 Configure miss: gnroff
-Configure miss: good-to-use Mac CFLAGS
-Configure miss: good-to-use Mac CFLAGS
+Configure miss: good-to-use Darwin CFLAGS
+Configure miss: good-to-use Darwin CFLAGS
 Configure miss: gss.h
 Configure miss: gssapi.h
 Configure miss: gssapi/gssapi.h
@@ -41,15 +35,7 @@ Configure miss: if _THREAD_SAFE is onwards defined
 Configure miss: if _THREAD_SAFE is onwards defined
 Configure miss: if compiler optimizer assumed setting might be used
 Configure miss: if compiler optimizer assumed setting might be used
-Configure miss: if gmtime_r is prototyped
-Configure miss: if gmtime_r is prototyped
-Configure miss: if gmtime_r might be used
-Configure miss: if gmtime_r might be used
 Configure miss: if idn2_lookup_ul can be linked
-Configure miss: if localtime_r is prototyped
-Configure miss: if localtime_r is prototyped
-Configure miss: if localtime_r might be used
-Configure miss: if localtime_r might be used
 Configure miss: if time_t is unsigned
 Configure miss: if time_t is unsigned
 Configure miss: libngtcp2 options with pkg-config
@@ -60,14 +46,10 @@ Configure miss: library containing psl_builtin
 Configure miss: library containing psl_builtin
 Configure miss: memory.h
 Configure miss: memory.h
-Configure miss: monotonic clock_gettime
-Configure miss: monotonic clock_gettime
 Configure miss: netinet/in6.h
 Configure miss: netinet/in6.h
 Configure miss: nettle_MD5Init in -lgnutls
 Configure miss: nettle_MD5Init in -lgnutls
-Configure miss: openssl options with pkg-config
-Configure miss: openssl options with pkg-config
 Configure miss: proto/bsdsocket.h
 Configure miss: proto/bsdsocket.h
 Configure miss: socket.h
@@ -101,8 +83,8 @@ Configure miss: whether to enable Secure Transport
 Configure miss: whether to enable Secure Transport
 Configure miss: whether to enable Windows native IDN (Windows native builds only)
 Configure miss: whether to enable Windows native IDN (Windows native builds only)
-Configure miss: whether to enable Windows native SSL/TLS (Windows native builds only)
-Configure miss: whether to enable Windows native SSL/TLS (Windows native builds only)
+Configure miss: whether to enable Windows native SSL/TLS
+Configure miss: whether to enable Windows native SSL/TLS
 Configure miss: whether to enable c-ares for DNS lookups
 Configure miss: whether to enable c-ares for DNS lookups
 Configure miss: whether to enable compiler warnings as errors
@@ -113,8 +95,8 @@ Configure miss: whether to enable debug build options
 Configure miss: whether to enable debug build options
 Configure miss: whether to enable strict compiler warnings
 Configure miss: whether to enable strict compiler warnings
-Configure miss: whether to support HSTS
-Configure miss: whether to support HSTS
+Configure miss: whether to link macOS SystemConfiguration framework
+Configure miss: whether to link macOS SystemConfiguration framework
 Configure miss: whether to support alt-svc
 Configure miss: whether to support alt-svc
 Configure miss: whether to support gopher

@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x5CC908FDB71E12C2 (daniel@haxx.se)
 #
 Name     : compat-curl-gnutls-soname4
-Version  : 7.76.0
-Release  : 11
-URL      : https://github.com/curl/curl/releases/download/curl-7_76_0/curl-7.76.0.tar.xz
-Source0  : https://github.com/curl/curl/releases/download/curl-7_76_0/curl-7.76.0.tar.xz
-Source1  : https://github.com/curl/curl/releases/download/curl-7_76_0/curl-7.76.0.tar.xz.asc
+Version  : 7.77.0
+Release  : 12
+URL      : https://github.com/curl/curl/releases/download/curl-7_77_0/curl-7.77.0.tar.xz
+Source0  : https://github.com/curl/curl/releases/download/curl-7_77_0/curl-7.77.0.tar.xz
+Source1  : https://github.com/curl/curl/releases/download/curl-7_77_0/curl-7.77.0.tar.xz.asc
 Summary  : Library to transfer files with ftp, http, etc.
 Group    : Development/Tools
 License  : MIT
@@ -92,8 +92,8 @@ license components for the compat-curl-gnutls-soname4 package.
 
 
 %prep
-%setup -q -n curl-7.76.0
-cd %{_builddir}/curl-7.76.0
+%setup -q -n curl-7.77.0
+cd %{_builddir}/curl-7.77.0
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -101,7 +101,7 @@ cd %{_builddir}/curl-7.76.0
 %patch5 -p1
 %patch6 -p1
 pushd ..
-cp -a curl-7.76.0 build32
+cp -a curl-7.77.0 build32
 popd
 
 %build
@@ -109,7 +109,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1617752581
+export SOURCE_DATE_EPOCH=1622732973
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used "
 export FCFLAGS="$FFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used "
@@ -173,10 +173,10 @@ cd ../build32;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1617752581
+export SOURCE_DATE_EPOCH=1622732973
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4
-cp %{_builddir}/curl-7.76.0/COPYING %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4/73bcd04aed1c45b611fd34aaa29e72069a49049b
+cp %{_builddir}/curl-7.77.0/COPYING %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4/73bcd04aed1c45b611fd34aaa29e72069a49049b
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -302,6 +302,7 @@ rm -f %{buildroot}/usr/share/man/man3/CURLOPT_AUTOREFERER.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_AWS_SIGV4.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_BUFFERSIZE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_CAINFO.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_CAINFO_BLOB.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_CAPATH.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_CERTINFO.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_CHUNK_BGN_FUNCTION.3
@@ -454,6 +455,7 @@ rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXYTYPE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXYUSERNAME.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXYUSERPWD.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_CAINFO.3
+rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_CAINFO_BLOB.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_CAPATH.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_CRLFILE.3
 rm -f %{buildroot}/usr/share/man/man3/CURLOPT_PROXY_ISSUERCERT.3
