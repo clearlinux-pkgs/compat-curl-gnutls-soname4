@@ -22,16 +22,15 @@ index f662481..916904f 100755
  
      if test "x$CURL_DISABLE_HTTP" != "x1" -a \
          "x$NTLM_WB_ENABLED" = "x1"; then
-diff --git a/lib/curl_setup.h b/lib/curl_setup.h
-index cf1c26a..a55853d 100644
---- a/lib/curl_setup.h
-+++ b/lib/curl_setup.h
-@@ -647,7 +647,7 @@ int netware_init(void);
-   defined(USE_OS400CRYPTO) || defined(USE_WIN32_CRYPTO) ||              \
-   (defined(USE_WOLFSSL) && defined(HAVE_WOLFSSL_DES_ECB_ENCRYPT))
- 
--#define USE_CURL_NTLM_CORE
-+#undef USE_CURL_NTLM_CORE
- 
- #  if defined(USE_MBEDTLS)
  /* Get definition of MBEDTLS_MD4_C */
+--- curl-7.78.0/lib/curl_setup.h~	2021-07-19 07:19:57.000000000 +0000
++++ curl-7.78.0/lib/curl_setup.h	2021-07-21 13:36:49.423114349 +0000
+@@ -658,7 +658,7 @@
+       defined(USE_GNUTLS) || defined(USE_NSS) || defined(USE_SECTRANSP) ||  \
+       defined(USE_OS400CRYPTO) || defined(USE_WIN32_CRYPTO) ||              \
+       (defined(USE_WOLFSSL) && defined(HAVE_WOLFSSL_DES_ECB_ENCRYPT))
+-#    define USE_CURL_NTLM_CORE
++#    undef USE_CURL_NTLM_CORE
+ #  endif
+ #  if defined(USE_CURL_NTLM_CORE) || defined(USE_WINDOWS_SSPI)
+ #    define USE_NTLM

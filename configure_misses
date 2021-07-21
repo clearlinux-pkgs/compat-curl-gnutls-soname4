@@ -95,8 +95,8 @@ Configure miss: whether to enable debug build options
 Configure miss: whether to enable debug build options
 Configure miss: whether to enable strict compiler warnings
 Configure miss: whether to enable strict compiler warnings
-Configure miss: whether to link macOS SystemConfiguration framework
-Configure miss: whether to link macOS SystemConfiguration framework
+Configure miss: whether to link macOS CoreFoundation and SystemConfiguration framework
+Configure miss: whether to link macOS CoreFoundation and SystemConfiguration framework
 Configure miss: whether to support alt-svc
 Configure miss: whether to support alt-svc
 Configure miss: whether to support gopher
