@@ -15,15 +15,15 @@ Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
  configure.ac  | 2 ++
  lib/connect.c | 2 +-
  lib/file.c    | 4 ++--
- lib/hostip6.c | 4 ++--
+ lib/hostip.c  | 4 ++--
  lib/if2ip.c   | 2 +-
  5 files changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 910cf32..8725a69 100755
+index d8dcec8..4db5db2 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -192,6 +192,8 @@ AC_DEFINE_UNQUOTED(OS, "${host}", [cpu-machine-OS])
+@@ -299,6 +299,8 @@ AC_DEFINE_UNQUOTED(OS, "${host}", [cpu-machine-OS])
  # Silence warning: ar: 'u' modifier ignored since 'D' is the default
  AC_SUBST(AR_FLAGS, [cr])
  
@@ -36,7 +36,7 @@ diff --git a/lib/connect.c b/lib/connect.c
 index 296fb62..18a9bee 100644
 --- a/lib/connect.c
 +++ b/lib/connect.c
-@@ -1573,7 +1573,7 @@ CURLcode Curl_socket(struct Curl_easy *data,
+@@ -1598,7 +1598,7 @@ CURLcode Curl_socket(struct Curl_easy *data,
    }
    else
      /* opensocket callback not set, so simply create the socket now */
@@ -49,7 +49,7 @@ diff --git a/lib/file.c b/lib/file.c
 index dd8a1fd..5d6cabd 100644
 --- a/lib/file.c
 +++ b/lib/file.c
-@@ -193,7 +193,7 @@ static CURLcode file_connect(struct Curl_easy *data, bool *done)
+@@ -194,7 +194,7 @@ static CURLcode file_connect(struct Curl_easy *data, bool *done)
      return CURLE_URL_MALFORMAT;
    }
  
@@ -58,7 +58,7 @@ index dd8a1fd..5d6cabd 100644
    file->path = real_path;
  #endif
    file->freepath = real_path; /* free this when done */
-@@ -277,7 +277,7 @@ static CURLcode file_upload(struct Curl_easy *data)
+@@ -278,7 +278,7 @@ static CURLcode file_upload(struct Curl_easy *data)
    else
      mode = MODE_DEFAULT|O_TRUNC;
  
@@ -67,11 +67,11 @@ index dd8a1fd..5d6cabd 100644
    if(fd < 0) {
      failf(data, "Can't open %s for writing", file->path);
      return CURLE_WRITE_ERROR;
-diff --git a/lib/hostip6.c b/lib/hostip6.c
-index 53b3c67..50929cc 100644
---- a/lib/hostip6.c
-+++ b/lib/hostip6.c
-@@ -44,7 +44,7 @@
+diff --git a/lib/hostip.c b/lib/hostip.c
+index 117caa2..a451d81 100644
+--- a/lib/hostip.c
++++ b/lib/hostip.c
+@@ -49,7 +49,7 @@
  #ifdef HAVE_PROCESS_H
  #include <process.h>
  #endif
@@ -80,7 +80,7 @@ index 53b3c67..50929cc 100644
  #include "urldata.h"
  #include "sendf.h"
  #include "hostip.h"
-@@ -75,7 +75,7 @@ bool Curl_ipv6works(struct Curl_easy *data)
+@@ -549,7 +549,7 @@ bool Curl_ipv6works(struct Curl_easy *data)
    else {
      int ipv6_works = -1;
      /* probe to see if we have a working IPv6 stack */

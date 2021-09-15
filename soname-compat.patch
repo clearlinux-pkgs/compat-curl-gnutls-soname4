@@ -1,6 +1,6 @@
-From f54b99c9524115172da416fd727f19e51e434ac4 Mon Sep 17 00:00:00 2001
+From d330b2403ad48d224475ec4d3ed99714456e914b Mon Sep 17 00:00:00 2001
 From: Patrick McCarty <patrick.mccarty@intel.com>
-Date: Wed, 21 Jul 2021 09:25:03 -0700
+Date: Wed, 15 Sep 2021 11:20:23 -0700
 Subject: [PATCH] Switch soname to curl-gnutls for binary compat
 
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>

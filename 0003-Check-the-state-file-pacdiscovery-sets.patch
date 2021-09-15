@@ -17,7 +17,7 @@ diff --git a/lib/url.c b/lib/url.c
 index 7e1e875..95b6575 100644
 --- a/lib/url.c
 +++ b/lib/url.c
-@@ -71,6 +71,8 @@ bool curl_win32_idn_to_ascii(const char *in, char **out);
+@@ -79,6 +79,8 @@ bool curl_win32_idn_to_ascii(const char *in, char **out);
  /* Need dbus so we can query pacrunner for proxy */
  #include <dbus/dbus.h>
  #endif /* CURL_DISABLE_PROXY */
@@ -26,7 +26,7 @@ index 7e1e875..95b6575 100644
  
  #include "urldata.h"
  #include "netrc.h"
-@@ -2286,6 +2288,7 @@ static char *detect_proxy(struct Curl_easy *data,
+@@ -2320,6 +2322,7 @@ static char *detect_proxy(struct Curl_easy *data,
  #ifdef CURL_DISABLE_VERBOSE_STRINGS
    (void)data;
  #endif
@@ -34,7 +34,7 @@ index 7e1e875..95b6575 100644
  
    /* Now, build <protocol>_proxy and check for such a one to use */
    while(*protop)
-@@ -2320,7 +2323,9 @@ static char *detect_proxy(struct Curl_easy *data,
+@@ -2354,7 +2357,9 @@ static char *detect_proxy(struct Curl_easy *data,
      proxy = prox; /* use this */
    }
  

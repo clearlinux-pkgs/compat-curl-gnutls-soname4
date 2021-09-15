@@ -25,7 +25,7 @@ Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
  3 files changed, 133 insertions(+), 6 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 916904f..7c3a067 100755
+index d440554..8252b6e 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -41,6 +41,8 @@ AC_CONFIG_MACRO_DIR([m4])
@@ -53,10 +53,10 @@ index b51796f..bdbf7eb 100644
  if CURL_LT_SHLIB_USE_VERSION_INFO
  libcurl_la_LDFLAGS_EXTRA += $(VERSIONINFO)
 diff --git a/lib/url.c b/lib/url.c
-index 19fcfb8..7e1e875 100644
+index 37b6c0e..e6f0897 100644
 --- a/lib/url.c
 +++ b/lib/url.c
-@@ -67,6 +67,11 @@
+@@ -75,6 +75,11 @@
  bool curl_win32_idn_to_ascii(const char *in, char **out);
  #endif  /* USE_LIBIDN2 */
  
@@ -68,7 +68,7 @@ index 19fcfb8..7e1e875 100644
  #include "urldata.h"
  #include "netrc.h"
  
-@@ -131,6 +136,7 @@ bool curl_win32_idn_to_ascii(const char *in, char **out);
+@@ -138,6 +143,7 @@ bool curl_win32_idn_to_ascii(const char *in, char **out);
  #include "memdebug.h"
  
  static void conn_free(struct connectdata *conn);
@@ -76,7 +76,7 @@ index 19fcfb8..7e1e875 100644
  
  /* Some parts of the code (e.g. chunked encoding) assume this buffer has at
   * more than just a few bytes to play with. Don't let it become too small or
-@@ -2249,9 +2255,12 @@ static bool check_noproxy(const char *name, const char *no_proxy)
+@@ -2283,9 +2289,12 @@ static bool check_noproxy(const char *name, const char *no_proxy)
  * The returned pointer must be freed by the caller (unless NULL)
  ****************************************************************/
  static char *detect_proxy(struct Curl_easy *data,
@@ -90,7 +90,7 @@ index 19fcfb8..7e1e875 100644
  
    /* If proxy was not specified, we check for default proxy environment
     * variables, to enable i.e Lynx compliance:
-@@ -2310,7 +2319,18 @@ static char *detect_proxy(struct Curl_easy *data,
+@@ -2344,7 +2353,18 @@ static char *detect_proxy(struct Curl_easy *data,
    if(prox) {
      proxy = prox; /* use this */
    }
@@ -110,7 +110,7 @@ index 19fcfb8..7e1e875 100644
      envp = (char *)"all_proxy";
      proxy = curl_getenv(envp); /* default proxy to use */
      if(!proxy) {
-@@ -2571,10 +2591,12 @@ static CURLcode create_conn_helper_init_proxy(struct Curl_easy *data,
+@@ -2605,10 +2625,12 @@ static CURLcode create_conn_helper_init_proxy(struct Curl_easy *data,
      Curl_safefree(proxy);
      Curl_safefree(socksproxy);
    }
@@ -125,7 +125,7 @@ index 19fcfb8..7e1e875 100644
  #endif /* CURL_DISABLE_HTTP */
  
    Curl_safefree(no_proxy);
-@@ -3485,6 +3507,109 @@ static void reuse_conn(struct Curl_easy *data,
+@@ -3528,6 +3550,109 @@ static void reuse_conn(struct Curl_easy *data,
  #endif
  }
  

@@ -3,5 +3,4 @@ libdbus-1.so.3
 libgnutls.so.30
 libnettle.so.8
 libnghttp2.so.14
-libpthread.so.0
 libz.so.1

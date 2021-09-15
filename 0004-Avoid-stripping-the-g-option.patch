@@ -18,10 +18,10 @@ Signed-off-by: Arzhan Kinzhalin <arzhan.i.kinzhalin@intel.com>
  1 file changed, 1 deletion(-)
 
 diff --git a/configure.ac b/configure.ac
-index 7c3a067..910cf32 100755
+index 8252b6e..d8dcec8 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -266,7 +266,6 @@ dnl **********************************************************************
+@@ -373,7 +373,6 @@ dnl **********************************************************************
  
  CURL_CHECK_COMPILER
  CURL_SET_COMPILER_BASIC_OPTS
