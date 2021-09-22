@@ -1,6 +1,6 @@
-From d330b2403ad48d224475ec4d3ed99714456e914b Mon Sep 17 00:00:00 2001
+From 3a129efd85457f1ab3d0fc28d96960a05a154ad3 Mon Sep 17 00:00:00 2001
 From: Patrick McCarty <patrick.mccarty@intel.com>
-Date: Wed, 15 Sep 2021 11:20:23 -0700
+Date: Wed, 22 Sep 2021 10:49:00 -0700
 Subject: [PATCH] Switch soname to curl-gnutls for binary compat
 
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
@@ -28,12 +28,12 @@ index 1da1e8d..a2ffd3d 100644
  
  # This might hold -Werror
 diff --git a/lib/Makefile.am b/lib/Makefile.am
-index bdbf7eb..4702e2e 100644
+index 78f635e..4e81278 100644
 --- a/lib/Makefile.am
 +++ b/lib/Makefile.am
 @@ -32,7 +32,7 @@ EXTRA_DIST = Makefile.m32 config-win32.h config-win32ce.h           \
   firefox-db2pem.sh config-vxworks.h Makefile.vxworks checksrc.pl    \
-  setup-win32.h
+  setup-win32.h .checksrc
  
 -lib_LTLIBRARIES = libcurl.la
 +lib_LTLIBRARIES = libcurl-gnutls.la
