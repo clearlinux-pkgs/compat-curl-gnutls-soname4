@@ -2,7 +2,6 @@ Configure miss: BrotliDecoderDecompress in -lbrotlidec
 Configure miss: BrotliDecoderDecompress in -lbrotlidec
 Configure miss: RTMP_Init in -lrtmp
 Configure miss: RTMP_Init in -lrtmp
-Configure miss: ZSTD_createDStream in -lzstd
 Configure miss: brotli/decode.h
 Configure miss: brotli/decode.h
 Configure miss: clock_gettime in libraries
@@ -46,6 +45,7 @@ Configure miss: library containing psl_builtin
 Configure miss: library containing psl_builtin
 Configure miss: memory.h
 Configure miss: memory.h
+Configure miss: mit-krb5-gssapi options with pkg-config
 Configure miss: netinet/in6.h
 Configure miss: netinet/in6.h
 Configure miss: nettle_MD5Init in -lgnutls

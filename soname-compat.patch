@@ -1,6 +1,6 @@
-From 3a129efd85457f1ab3d0fc28d96960a05a154ad3 Mon Sep 17 00:00:00 2001
+From b6f817c38bd42ddea6bc94e2e20e967acb81f7e4 Mon Sep 17 00:00:00 2001
 From: Patrick McCarty <patrick.mccarty@intel.com>
-Date: Wed, 22 Sep 2021 10:49:00 -0700
+Date: Sat, 29 Jan 2022 21:29:28 -0800
 Subject: [PATCH] Switch soname to curl-gnutls for binary compat
 
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
@@ -108,7 +108,7 @@ index 78f635e..4e81278 100644
  
  CHECKSRC = $(CS_$(V))
 diff --git a/src/Makefile.am b/src/Makefile.am
-index 7343731..b102b5e 100644
+index c8abc93..68500dc 100644
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
 @@ -61,9 +61,9 @@ CFLAGS += @CURL_CFLAG_EXTRAS@

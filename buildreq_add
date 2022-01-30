@@ -18,5 +18,7 @@ gnutls-dev32
 pkg-config
 zlib-dev
 zlib-dev32
+zstd-dev
+zstd-dev32
 libgcrypt-dev32
 nettle-dev32
