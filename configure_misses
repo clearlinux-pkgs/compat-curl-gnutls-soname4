@@ -21,6 +21,7 @@ Configure miss: gssapi.h
 Configure miss: gssapi/gssapi.h
 Configure miss: gssapi/gssapi_generic.h
 Configure miss: gssapi/gssapi_krb5.h
+Configure miss: i686-generic-linux-gnu-file
 Configure miss: if GSS-API support is requested
 Configure miss: if OS is AIX (to define _ALL_SOURCE)
 Configure miss: if OS is AIX (to define _ALL_SOURCE)
@@ -97,10 +98,10 @@ Configure miss: whether to enable strict compiler warnings
 Configure miss: whether to enable strict compiler warnings
 Configure miss: whether to link macOS CoreFoundation and SystemConfiguration framework
 Configure miss: whether to link macOS CoreFoundation and SystemConfiguration framework
-Configure miss: whether to support alt-svc
-Configure miss: whether to support alt-svc
 Configure miss: whether to support gopher
 Configure miss: whether to support gopher
+Configure miss: whether to support headers-api
+Configure miss: whether to support headers-api
 Configure miss: whether to support ldap
 Configure miss: whether to support ldap
 Configure miss: whether to support ldaps
@@ -121,3 +122,4 @@ Configure miss: whether to use libgcc
 Configure miss: whether to use libgcc
 Configure miss: whether versioned symbols are wanted
 Configure miss: whether versioned symbols are wanted
+Configure miss: x86_64-generic-linux-gnu-file

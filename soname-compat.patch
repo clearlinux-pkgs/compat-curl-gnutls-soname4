@@ -1,6 +1,6 @@
-From b6f817c38bd42ddea6bc94e2e20e967acb81f7e4 Mon Sep 17 00:00:00 2001
+From b2f925adcfec06791e68c7cec45e93201d488c14 Mon Sep 17 00:00:00 2001
 From: Patrick McCarty <patrick.mccarty@intel.com>
-Date: Sat, 29 Jan 2022 21:29:28 -0800
+Date: Mon, 2 May 2022 14:59:50 -0700
 Subject: [PATCH] Switch soname to curl-gnutls for binary compat
 
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
@@ -12,7 +12,7 @@ Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
  4 files changed, 24 insertions(+), 24 deletions(-)
 
 diff --git a/docs/examples/Makefile.am b/docs/examples/Makefile.am
-index 1da1e8d..a2ffd3d 100644
+index dbb9428..858f11c 100644
 --- a/docs/examples/Makefile.am
 +++ b/docs/examples/Makefile.am
 @@ -48,9 +48,9 @@ LIBS = $(BLANK_AT_MAKETIME)
@@ -28,19 +28,19 @@ index 1da1e8d..a2ffd3d 100644
  
  # This might hold -Werror
 diff --git a/lib/Makefile.am b/lib/Makefile.am
-index 78f635e..4e81278 100644
+index 294307d..ba164b7 100644
 --- a/lib/Makefile.am
 +++ b/lib/Makefile.am
-@@ -32,7 +32,7 @@ EXTRA_DIST = Makefile.m32 config-win32.h config-win32ce.h           \
-  firefox-db2pem.sh config-vxworks.h Makefile.vxworks checksrc.pl    \
-  setup-win32.h .checksrc
+@@ -28,7 +28,7 @@ EXTRA_DIST = Makefile.m32 config-win32.h config-win32ce.h config-plan9.h   \
+  libcurl.plist libcurl.rc config-amigaos.h makefile.amiga config-win32ce.h \
+  config-os400.h setup-os400.h $(CMAKE_DIST) setup-win32.h .checksrc
  
 -lib_LTLIBRARIES = libcurl.la
 +lib_LTLIBRARIES = libcurl-gnutls.la
  
  if BUILD_UNITTESTS
  noinst_LTLIBRARIES = libcurlu.la
-@@ -84,43 +84,43 @@ AM_CPPFLAGS += -DBUILDING_LIBCURL
+@@ -73,43 +73,43 @@ AM_CPPFLAGS += -DBUILDING_LIBCURL
  AM_LDFLAGS =
  AM_CFLAGS =
  
@@ -98,7 +98,7 @@ index 78f635e..4e81278 100644
  
  libcurlu_la_CPPFLAGS = $(AM_CPPFLAGS) -DCURL_STATICLIB -DUNITTESTS
  libcurlu_la_LDFLAGS = $(AM_LDFLAGS) -static $(LIBCURL_LIBS)
-@@ -129,7 +129,7 @@ libcurlu_la_CFLAGS = $(AM_CFLAGS)
+@@ -118,7 +118,7 @@ libcurlu_la_CFLAGS = $(AM_CFLAGS)
  # Makefile.inc provides the CSOURCES and HHEADERS defines
  include Makefile.inc
  
@@ -108,7 +108,7 @@ index 78f635e..4e81278 100644
  
  CHECKSRC = $(CS_$(V))
 diff --git a/src/Makefile.am b/src/Makefile.am
-index c8abc93..68500dc 100644
+index cfffc32..88e1ed3 100644
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
 @@ -61,9 +61,9 @@ CFLAGS += @CURL_CFLAG_EXTRAS@
@@ -124,10 +124,10 @@ index c8abc93..68500dc 100644
  
  # if unit tests are enabled, build a static library to link them with
 diff --git a/tests/libtest/Makefile.am b/tests/libtest/Makefile.am
-index 82c3ade..8d27433 100644
+index 848acd8..a603fd0 100644
 --- a/tests/libtest/Makefile.am
 +++ b/tests/libtest/Makefile.am
-@@ -57,11 +57,11 @@ CLEANFILES = lib1521.c
+@@ -47,11 +47,11 @@ CLEANFILES = lib1521.c
  LIBS = $(BLANK_AT_MAKETIME)
  
  if USE_EXPLICIT_LIB_DEPS
