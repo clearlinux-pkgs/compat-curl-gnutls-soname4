@@ -1,6 +1,5 @@
 #!/bin/bash
-set -e
-set -x
+set -e -o pipefail -x
 
 # compat-curl-gnutls-soname4 should always be based on our native curl
 # package, with the exception of being configured to use gnutls and
@@ -90,3 +89,4 @@ rm -rf staging
 
 echo "Now running autospec against ${CURL_URL}"
 make autospec URL="$CURL_URL"
+make koji-nowait
