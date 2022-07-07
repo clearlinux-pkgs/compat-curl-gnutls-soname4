@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x5CC908FDB71E12C2 (daniel@haxx.se)
 #
 Name     : compat-curl-gnutls-soname4
-Version  : 7.83.0
-Release  : 17
-URL      : https://github.com/curl/curl/releases/download/curl-7_83_0/curl-7.83.0.tar.xz
-Source0  : https://github.com/curl/curl/releases/download/curl-7_83_0/curl-7.83.0.tar.xz
-Source1  : https://github.com/curl/curl/releases/download/curl-7_83_0/curl-7.83.0.tar.xz.asc
+Version  : 7.84.0
+Release  : 18
+URL      : https://github.com/curl/curl/releases/download/curl-7_84_0/curl-7.84.0.tar.xz
+Source0  : https://github.com/curl/curl/releases/download/curl-7_84_0/curl-7.84.0.tar.xz
+Source1  : https://github.com/curl/curl/releases/download/curl-7_84_0/curl-7.84.0.tar.xz.asc
 Summary  : Library to transfer files with ftp, http, etc.
 Group    : Development/Tools
 License  : MIT
@@ -93,8 +93,8 @@ license components for the compat-curl-gnutls-soname4 package.
 
 
 %prep
-%setup -q -n curl-7.83.0
-cd %{_builddir}/curl-7.83.0
+%setup -q -n curl-7.84.0
+cd %{_builddir}/curl-7.84.0
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -102,7 +102,7 @@ cd %{_builddir}/curl-7.83.0
 %patch5 -p1
 %patch6 -p1
 pushd ..
-cp -a curl-7.83.0 build32
+cp -a curl-7.84.0 build32
 popd
 
 %build
@@ -110,7 +110,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1651530482
+export SOURCE_DATE_EPOCH=1657231209
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used "
 export FCFLAGS="$FFLAGS -Os -fdata-sections -ffunction-sections -fno-lto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used "
@@ -174,10 +174,10 @@ cd ../build32;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1651530482
+export SOURCE_DATE_EPOCH=1657231209
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4
-cp %{_builddir}/curl-7.83.0/COPYING %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4/a1b6d897dd52289ab03cb1350b152e68f44bc130
+cp %{_builddir}/curl-7.84.0/COPYING %{buildroot}/usr/share/package-licenses/compat-curl-gnutls-soname4/a1b6d897dd52289ab03cb1350b152e68f44bc130
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -219,6 +219,8 @@ rm -f %{buildroot}*/usr/share/man/man1/curl.1
 rm -f %{buildroot}*/usr/share/man/man3/CURLINFO_ACTIVESOCKET.3
 rm -f %{buildroot}*/usr/share/man/man3/CURLINFO_APPCONNECT_TIME.3
 rm -f %{buildroot}*/usr/share/man/man3/CURLINFO_APPCONNECT_TIME_T.3
+rm -f %{buildroot}*/usr/share/man/man3/CURLINFO_CAINFO.3
+rm -f %{buildroot}*/usr/share/man/man3/CURLINFO_CAPATH.3
 rm -f %{buildroot}*/usr/share/man/man3/CURLINFO_CERTINFO.3
 rm -f %{buildroot}*/usr/share/man/man3/CURLINFO_CONDITION_UNMET.3
 rm -f %{buildroot}*/usr/share/man/man3/CURLINFO_CONNECT_TIME.3

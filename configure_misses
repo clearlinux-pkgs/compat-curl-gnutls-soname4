@@ -41,7 +41,6 @@ Configure miss: if time_t is unsigned
 Configure miss: libngtcp2 options with pkg-config
 Configure miss: libngtcp2 options with pkg-config
 Configure miss: library containing gsasl_init
-Configure miss: library containing gsasl_init
 Configure miss: library containing psl_builtin
 Configure miss: library containing psl_builtin
 Configure miss: memory.h
@@ -100,8 +99,6 @@ Configure miss: whether to link macOS CoreFoundation and SystemConfiguration fra
 Configure miss: whether to link macOS CoreFoundation and SystemConfiguration framework
 Configure miss: whether to support gopher
 Configure miss: whether to support gopher
-Configure miss: whether to support headers-api
-Configure miss: whether to support headers-api
 Configure miss: whether to support ldap
 Configure miss: whether to support ldap
 Configure miss: whether to support ldaps
